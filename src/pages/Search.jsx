@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch, FaTimesCircle, FaUserGraduate, FaPhoneAlt, FaSpinner } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ApiBaseUrl } from '../Context/Context';
 
 const normalizePhone = (num) => {
   num = num.replace(/\D/g, '');
@@ -22,6 +23,7 @@ const Search = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const apiBaseUrl = useContext(ApiBaseUrl);
 
   useEffect(() => {
     if (!phone) {
@@ -47,7 +49,7 @@ const Search = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.get('https://stdent-reg-bk.onrender.com/api/students');
+      const res = await axios.get(`${apiBaseUrl}/api/students`);
       let matches = [];
       if (inputDigits.length === 2 && inputDigits === '61') {
         matches = res.data.filter(s =>
