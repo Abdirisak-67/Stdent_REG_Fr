@@ -347,36 +347,38 @@ const StudentDetails = () => {
         </motion.div>
       </div>
 
-      <motion.div
-        className="fixed inset-0 pointer-events-none z-40 flex items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+      {!called && !edit && (
         <motion.div
-          className="absolute"
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
-          style={{ top: '10%', left: '50%', transform: 'translate(-50%, 0)' }}
+          className="fixed inset-0 pointer-events-none z-40 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <FaSatellite className="text-blue-300 drop-shadow-lg" size={80} />
-        </motion.div>
-        <motion.div
-          className="absolute w-full flex justify-center"
-          style={{ bottom: '10%' }}
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-        >
-          <motion.span
-            className="bg-white bg-opacity-80 px-6 py-3 rounded-full shadow-lg text-blue-700 font-bold text-xl border-2 border-blue-200 animate-pulse"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+          <motion.div
+            className="absolute"
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
+            style={{ top: '10%', left: '50%', transform: 'translate(-50%, 0)' }}
           >
-            Don't forget to tick
-          </motion.span>
+            <FaSatellite className="text-blue-300 drop-shadow-lg" size={80} />
+          </motion.div>
+          <motion.div
+            className="absolute w-full flex justify-center"
+            style={{ bottom: '10%' }}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            <motion.span
+              className="bg-white bg-opacity-80 px-6 py-3 rounded-full shadow-lg text-blue-700 font-bold text-xl border-2 border-blue-200 animate-pulse"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+            >
+              Don't forget to tick
+            </motion.span>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </div>
   );
 };
