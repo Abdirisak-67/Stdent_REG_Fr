@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaUserGraduate, FaPhone, FaCheckCircle, FaTimesCircle, FaSpinner, FaSearch } from 'react-icons/fa';
+import { FaUserGraduate, FaPhone, FaCheckCircle, FaTimesCircle, FaSpinner, FaSearch, FaEdit, FaTrash } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const AllStudents = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -29,6 +31,17 @@ const AllStudents = () => {
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.phone?.includes(searchTerm)
   );
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this student?')) {
+      try {
+        await axios.delete(`https://stdent-reg-bk.onrender.com/api/students/${id}`);
+        setStudents(students.filter(s => s._id !== id));
+      } catch (error) {
+        alert('Failed to delete student.');
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
@@ -105,6 +118,11 @@ const AllStudents = () => {
               <div className="col-span-5 md:col-span-4">Student Name</div>
               <div className="col-span-4 md:col-span-3">Phone Number</div>
               <div className="col-span-3 md:col-span-3">Status</div>
+              <div className="col-span-12 md:col-span-2 text-center">Actions</div>
+            </div>
+
+            <div className="col-span-12 mt-2">
+              <hr className="border-t border-gray-200" />
             </div>
 
             <ul className="divide-y divide-gray-200">
@@ -142,6 +160,22 @@ const AllStudents = () => {
                             </>
                           )}
                         </span>
+                      </div>
+                      <div className="col-span-12 md:col-span-2 flex gap-2 justify-center mt-2 md:mt-0">
+                        <button
+                          title="Update"
+                          onClick={() => navigate(`/students/${student._id}?edit=true`)}
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-1 text-xs font-medium transition"
+                        >
+                          <FaEdit /> Update
+                        </button>
+                        <button
+                          title="Delete"
+                          onClick={() => handleDelete(student._id)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1 text-xs font-medium transition"
+                        >
+                          <FaTrash /> Delete
+                        </button>
                       </div>
                     </div>
                   </motion.li>
