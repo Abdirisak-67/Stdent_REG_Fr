@@ -47,7 +47,7 @@ const Search = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/students');
+      const res = await axios.get('https://stdent-reg-bk.onrender.com/api/students');
       let matches = [];
       if (inputDigits.length === 2 && inputDigits === '61') {
         matches = res.data.filter(s =>
